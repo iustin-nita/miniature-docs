@@ -4,17 +4,31 @@
 
 <body>
   <nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        Miniature docs
-      </a>
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#">
+          Miniature docs
+        </a>
+      </div>
+    </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      {{> editor}}
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      {{> viewer}}
     </div>
   </div>
-</nav>
-  {{> editor}}
+</div>
 </body>
 
 <template name="editor">
-    {{>sharejsCM docid=docid id="editor"}}
+    {{>sharejsCM docid=docid onRender=config id="editor"}}
+</template>
+
+<template name="viewer">
+    <iframe id="preview_iframe" src="" frameborder="0"></iframe>
 </template>
