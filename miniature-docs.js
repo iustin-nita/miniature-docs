@@ -27,6 +27,7 @@ if (Meteor.isClient) {
       return function(editor) {
         editor.setOption("lineNumbers", true);
         editor.setOption("mode","html");
+        editor.setOption("theme", "cobalt");
         editor.on("change", function(cm_editor, info) {
           console.log(cm_editor.getValue());
           $("#preview_iframe").contents().find("html").html(cm_editor.getValue());
@@ -42,7 +43,26 @@ if (Meteor.isClient) {
     }
   });
 
-}
+  Template.editingUsers.helpers({
+    users: function() {
+      var doc, eusers, users;
+      doc = Documents.findOne();
+      if(!doc) {return;} //give up
+      eusers = EditingUsers.findOne({docid: doc._id});
+      if(!eusers) {return;} //give up
+      console.log('asdfasd');
+      users = [];
+      var i = 0;
+      for (var user_id in eusers.users) {
+        console.log('adding user');
+        users[i] = fixObjectKeys(eusers.users[user_id]);
+        i++;
+      }
+      return users;
+    },
+  });
+
+}// end is client
 
 if (Meteor.isServer) {
   Meteor.startup(function () {
@@ -59,7 +79,6 @@ Meteor.methods({
     var doc, user, eusers;
     doc = Documents.findOne();
     if (!doc) {return;} //no doc give up
-
     if(!this.userId){return;} //no logged in user give up
 
     // now I have a doc and possibly a user
@@ -68,11 +87,24 @@ Meteor.methods({
     if (!eusers) {
       eusers = {
         docid: doc._id,
-        users: {}
+        users: {},
       };
     }
+    console.log('eusers:' +eusers);
     user.lastEdit = new Date();
     eusers.users[this.userId] = user;
-    EditingUsers.upsert({_id: eusers.id},{user: 'sdasd'});
+    EditingUsers.upsert({_id: eusers._id},eusers);
+    console.log(EditingUsers.findOne());
   }
 });
+
+
+// allow use of hyphen in spacebars
+function fixObjectKeys(obj) {
+  var newObj = {};
+  for ( var key in obj) {
+    var key2 = key.replace("-", "");
+    newObj[key2] = obj[key];
+  }
+  return newObj;
+}

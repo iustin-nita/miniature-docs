@@ -23,7 +23,14 @@
   	</div>
   </div>
 
-<div class="container">
+<div class="container top-margin">
+
+  <div class="row">
+    <div class="col-xs-12">
+      {{> editingUsers}}
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       {{> editor}}
@@ -32,7 +39,11 @@
       {{> viewer}}
     </div>
   </div>
+
 </div>
+
+
+
 </body>
 
 <template name="editor">
@@ -41,4 +52,10 @@
 
 <template name="viewer">
     <iframe id="preview_iframe" src="" frameborder="0"></iframe>
+</template>
+
+<template name="editingUsers">Editors: 
+  {{#each users}}
+    <span class="eusers label label-info">{{firstname}}</span>
+  {{/each}}
 </template>
