@@ -3,15 +3,6 @@ EditingUsers = new Mongo.Collection("editingUsers");
 if (Meteor.isClient) {
 
   Template.editor.helpers({
-    create: function(){
-
-    },
-    rendered: function(){
-
-    },
-    destroyed: function(){
-
-    },
     docid: function() {
       var doc = Documents.findOne();
       if (doc) {
@@ -37,12 +28,6 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.editor.events({
-    "click #foo": function(event, template){
-
-    }
-  });
-
   Template.editingUsers.helpers({
     users: function() {
       var doc, eusers, users;
@@ -61,6 +46,19 @@ if (Meteor.isClient) {
       return users;
     },
   });
+
+    Template.editor.events({
+    "click #foo": function(event, template){
+
+    }
+  });
+
+    Template.navigation.events({
+      'click .js-add-doc': function (event) {
+        event.preventDefault();
+        console.log('add new doc');
+      }
+    });
 
 }// end is client
 

@@ -3,28 +3,8 @@
 </head>
 
 <body>
-  <div class="navbar navbar-default" role="navigation">
-  	<div class="navbar-header">
-  		<a class="navbar-brand" href="#">Miniature docs</a>
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-          </button>
-  	</div>
-  	<div class="navbar-collapse collapse">
-  		<ul class="nav navbar-nav">
-  			<li class="active"><a href="#">Link</a></li>
-  		</ul>
-  		<ul class="nav navbar-nav navbar-right">
-  			{{> loginButtons}} <!-- here -->
-  		</ul>
-  	</div>
-  </div>
-
 <div class="container top-margin">
-
+  {{> navigation}}
   <div class="row">
     <div class="col-xs-12">
       {{> editingUsers}}
@@ -42,10 +22,31 @@
 
 </div>
 
-
-
 </body>
 
+
+<template name="navigation">
+  <div class="navbar navbar-default" role="navigation">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">Miniature docs</a>
+        <a href="#" class="js-add-doc"><span class="glyphicon glyphicon-plus"></span>new document</a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </button>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Link</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        {{> loginButtons}} <!-- here -->
+      </ul>
+    </div>
+  </div>
+</template>
 <template name="editor">
     {{>sharejsCM docid=docid onRender=config id="editor"}}
 </template>
