@@ -30,6 +30,8 @@ if (Meteor.isClient) {
 
   Template.editingUsers.helpers({
     users: function() {
+      setupCurrentDocument();
+      return Session.get("docid");
       var doc, eusers, users;
       doc = Documents.findOne();
       if(!doc) {return;} //give up
@@ -124,4 +126,14 @@ function fixObjectKeys(obj) {
     newObj[key2] = obj[key];
   }
   return newObj;
+}
+
+function sectupCurrentDocument() {
+  var doc;
+  if (!Session.get("docid")) { //no doc id set yet
+    doc = Documents.findOne();
+    if (doc) {
+      Session.set("docid", doc._id);
+    }
+  }
 }
