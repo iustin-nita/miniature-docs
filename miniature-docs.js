@@ -48,6 +48,15 @@ if (Meteor.isClient) {
     }
   });
 
+
+    Template.navbar.helpers({
+      documents: function(){
+        return Documents.find();
+      },
+    });
+
+
+
     Template.navbar.events({
       "click .js-add-doc":function(event){
         event.preventDefault();
@@ -65,6 +74,10 @@ if (Meteor.isClient) {
           });
         }
       },
+      'click .js-load-doc': function(event) {
+        console.log(this);
+        Session.set('docid', this._id);
+      }
     });
 
 }// end is client
@@ -73,7 +86,7 @@ if (Meteor.isServer) {
   Meteor.startup(function () {
     // code to run on server at startup
     if(!Documents.findOne()) {
-      Documents.insert({title: "new document"});
+      // Documents.insert({title: "new document"});
     }
   });
 }
@@ -90,7 +103,7 @@ Meteor.methods({
       doc = {owner:this.userId, createdOn:new Date(),
             title:"my new doc"};
       var id = Documents.insert(doc);
-      console.log("addDoc method: got an id "+id);
+      console.log(Documents.findOne({_id:id}));
       return id;
     }
   },

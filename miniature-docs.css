@@ -22,3 +22,8 @@
 	resize:both;
 	width:100%;
 }
+
+.dropdown-menu {
+  max-height: 350px;
+  overflow-y: auto;
+}
