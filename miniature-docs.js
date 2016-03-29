@@ -4,13 +4,8 @@ if (Meteor.isClient) {
 
   Template.editor.helpers({
     docid: function() {
-      var doc = Documents.findOne();
-      if (doc) {
-        return Documents.findOne()._id;
-      }
-      else {
-        return undefined;
-      }
+      setupCurrentDocument();
+      return Session.get("docid");
 
     },
 
@@ -31,17 +26,15 @@ if (Meteor.isClient) {
   Template.editingUsers.helpers({
     users: function() {
       setupCurrentDocument();
-      return Session.get("docid");
+      // return Session.get("docid");
       var doc, eusers, users;
       doc = Documents.findOne();
       if(!doc) {return;} //give up
       eusers = EditingUsers.findOne({docid: doc._id});
       if(!eusers) {return;} //give up
-      console.log('asdfasd');
       users = [];
       var i = 0;
       for (var user_id in eusers.users) {
-        console.log('adding user');
         users[i] = fixObjectKeys(eusers.users[user_id]);
         i++;
       }
@@ -55,17 +48,23 @@ if (Meteor.isClient) {
     }
   });
 
-    Template.navigation.events({
-      'click .js-add-doc': function (event) {
+    Template.navbar.events({
+      "click .js-add-doc":function(event){
         event.preventDefault();
-        if (!Meteor.user()) {
-          alert('you need to log in first');
-        } else {
-          //they are logged in
-          console.log('add new doc');
-          Meteor.call('addDoc');
+        console.log("Add a new doc!");
+        if (!Meteor.user()){// user not available
+            alert("You need to login first!");
         }
-      }
+        else {
+          // they are logged in... lets insert a doc
+          var id = Meteor.call("addDoc", function(err, res){
+            if (!err){// all good
+              console.log("event callback received id: "+res);
+              Session.set("docid", res);
+            }
+          });
+        }
+      },
     });
 
 }// end is client
@@ -81,17 +80,18 @@ if (Meteor.isServer) {
 
 
 Meteor.methods({
-  addDoc: function() {
+  // method to add a new document
+  addDoc:function(){
     var doc;
-    if(!this.userId) { //not logged in
+    if (!this.userId){// not logged in
       return;
-    } else {
-      doc = {
-        owner: this.userId,
-        createdOn: new Date(),
-        title:"sample title"
-      };
-      Documents.insert(doc);
+    }
+    else {
+      doc = {owner:this.userId, createdOn:new Date(),
+            title:"my new doc"};
+      var id = Documents.insert(doc);
+      console.log("addDoc method: got an id "+id);
+      return id;
     }
   },
   addEditingUser: function() {
@@ -128,7 +128,7 @@ function fixObjectKeys(obj) {
   return newObj;
 }
 
-function sectupCurrentDocument() {
+function setupCurrentDocument() {
   var doc;
   if (!Session.get("docid")) { //no doc id set yet
     doc = Documents.findOne();
