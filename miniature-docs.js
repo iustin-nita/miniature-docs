@@ -42,6 +42,15 @@ if (Meteor.isClient) {
     },
   });
 
+
+
+  Template.docMeta.helpers({
+    document: function(){
+       return Documents.findOne({_id:Session.get('docid')});
+    },
+  });
+
+
     Template.editor.events({
     "click #foo": function(event, template){
 
