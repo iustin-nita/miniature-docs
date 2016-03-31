@@ -1,6 +1,10 @@
 this.Documents = new Mongo.Collection("documents");
 EditingUsers = new Mongo.Collection("editingUsers");
+
 if (Meteor.isClient) {
+
+  Meteor.subscribe("documents");
+  Meteor.subscribe("editingUsers");
 
   Template.editor.helpers({
     docid: function() {
@@ -78,7 +82,7 @@ if (Meteor.isClient) {
 
     Template.navbar.helpers({
       documents: function(){
-        return Documents.find();
+        return Documents.find({isPrivate:false});
       },
     });
 
@@ -115,6 +119,14 @@ if (Meteor.isServer) {
     if(!Documents.findOne()) {
       // Documents.insert({title: "new document"});
     }
+  });
+
+  Meteor.publish("documents", function(){
+    return Documents.find({isPrivate:false});
+  });
+
+  Meteor.publish("editingUsers", function(){
+    return EditingUsers.find({});
   });
 }
 
