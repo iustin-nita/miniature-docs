@@ -78,7 +78,7 @@
 
 <template name="docMeta">
   {{#with document}}
-  <span class="h1"> {{> editableText collection="documents" field="title"}}</span>
+  <span class="h1"> {{> editableText collection="documents" userCanEdit=userCanEdit field="title"}}</span>
   {{/with}}
 </template>
 
