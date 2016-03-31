@@ -50,6 +50,13 @@ if (Meteor.isClient) {
     },
   });
 
+  Template.docMeta.events({
+    'click .js-private': function(event){
+       var doc = {_id:Session.get('docid'), isPrivate: event.target.checked };
+       Meteor.call('updateDocPrivacy', doc);
+    },
+  });
+
   Template.editableText.helpers({
     userCanEdit: function(doc, Collection) {
       // can edit if the current doc is owned by the user
@@ -147,6 +154,14 @@ Meteor.methods({
     eusers.users[this.userId] = user;
     EditingUsers.upsert({_id: eusers._id},eusers);
     console.log(EditingUsers.findOne());
+  },
+  updateDocPrivacy: function(doc) {
+    console.log(doc);
+    var realDoc = Documents.findOne({_id: doc._id, owner: this.userId});
+    if (realDoc) {
+      realDoc.isPrivate = doc.isPrivate;
+      Documents.update({_id: doc._id}, realDoc);
+    }
   }
 });
 

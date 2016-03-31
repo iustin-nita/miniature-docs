@@ -1,5 +1,5 @@
 <head>
-  <title>textcircle</title>
+  <title>Miniature Docs</title>
 </head>
 
 <body>
@@ -79,6 +79,11 @@
 <template name="docMeta">
   {{#with document}}
   <span class="h1"> {{> editableText collection="documents" userCanEdit=userCanEdit field="title"}}</span>
+  <div class="checkbox">
+    <label for="private">
+      <input type="checkbox" id="private" class="js-private">Private
+    </label>
+  </div>
   {{/with}}
 </template>
 
