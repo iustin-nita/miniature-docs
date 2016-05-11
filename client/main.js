@@ -8,7 +8,7 @@ FlowRouter.route('/', {
   }
 });
 
-FlowRouter.route('/:docId', {
+FlowRouter.route('/documents/:docId', {
   action: function() {
     BlazeLayout.render("mainLayout", {content: "docItem"});
   }

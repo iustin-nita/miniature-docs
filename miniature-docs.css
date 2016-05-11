@@ -27,3 +27,8 @@
   max-height: 350px;
   overflow-y: auto;
 }
+
+img {
+  max-width: 100%;
+  height: auto;
+}
