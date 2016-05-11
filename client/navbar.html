@@ -1,8 +1,7 @@
-
 <template name="navbar">
 <nav class="navbar navbar-default navbar-fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">TextCircle</a>
+        <a class="navbar-brand" href="/#">TextCircle</a>
         <ul class="nav navbar-nav">
           <li>
             <a href="#" class="js-add-doc">
@@ -18,7 +17,7 @@
 
           <ul class="dropdown-menu">
             {{#each documents}}
-            <li><a href="#" class="js-load-doc">{{title}}</a></li>
+            <li><a href="/{{_id}}" class="js-load-doc">{{title}}</a></li>
             {{/each}}
           </ul>
         </li>

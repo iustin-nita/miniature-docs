@@ -1,6 +1,19 @@
 Meteor.subscribe("documents");
 Meteor.subscribe("editingUsers");
 
+
+FlowRouter.route('/', {
+  action: function() {
+    BlazeLayout.render("mainLayout", {content: "docList"});
+  }
+});
+
+FlowRouter.route('/:docId', {
+  action: function() {
+    BlazeLayout.render("mainLayout", {content: "docItem"});
+  }
+});
+
 Template.editor.helpers({
   docid: function() {
     setupCurrentDocument();
@@ -83,6 +96,12 @@ Template.editableText.helpers({
 
   }
 });
+
+  Template.docList.helpers({
+    documents: function(){
+      return Documents.find({});
+    },
+  });
 
 
   Template.navbar.helpers({

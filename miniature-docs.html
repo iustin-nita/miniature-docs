@@ -1,11 +1,13 @@
-<head>
-  <title>Miniature Docs</title>
-</head>
+<template name="mainLayout">
+	<head>
+	  <title>Miniature Docs</title>
+	</head>
 
-<body>
-	{{> navbar}}
+	<body>
+		{{> navbar}}
 
-	
-</body>
+		{{>Template.dynamic template=content}}
+	</body>
+</template>
 
 
