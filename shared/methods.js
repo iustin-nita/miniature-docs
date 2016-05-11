@@ -13,6 +13,18 @@ Meteor.methods({
       return id;
     }
   },
+  //add comment
+  addComment: function(comment) {
+    console.log(comment);
+    if(this.userId){
+      comment.createdOn = new Date();
+      comment.owner = this.userId;
+      return Comments.insert(comment);
+      console.log(comment);
+    } else {
+      console.log(wtf);
+    }
+  },
   addEditingUser: function(docid) {
     var doc, user, eusers;
     doc = Documents.findOne({_id: docid});

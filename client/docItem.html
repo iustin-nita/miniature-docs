@@ -21,7 +21,35 @@
         {{> viewer}}
       </div>
     </div>
+
+    {{>commentsList}}
+
+    {{>insertCommentForm}}
+
   </div>
+</template>
+
+<template name="commentsList">
+asdfsadf
+  {{#each comments}}
+    {{title}} <br>: {{body}}
+  {{/each}}
+</template>
+
+<template name="insertCommentForm">
+  {{#autoForm collection="Comments" id="insertCommentForm" type="method" meteormethod="addComment"}}
+  <fieldset>
+    <legend>Comment</legend>
+    {{> afQuickField name="title"}}
+    {{> afQuickField name="body" rows=6 value="Write your commment here"}}
+    {{> afQuickField name="docid" value=docid type="hidden"}}
+  </fieldset>
+  <button type="submit" class="btn btn-primary">Insert</button>
+  {{/autoForm}}
+</template>
+
+<template name="insertCommentForm2">
+  {{> quickForm collection="Comments" id="insertCommentForm" type="method" meteormethod="addComment"}}
 </template>
 
 
@@ -55,3 +83,5 @@
 
   {{/each}}
 </template>
+
+
