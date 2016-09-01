@@ -3,17 +3,17 @@
 		<div class="row">
 			{{#each documents}}
 			<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
-				<a href="/documents/{{_id}}">
 					<div class="card">
-						<img class="card-img-top" src="http://placehold.it/350x280" alt="Card image cap">
+						<a href="/documents/{{_id}}">
+							<img class="card-img-top" src="http://placehold.it/350x280" alt="Card image cap">
+						</a>
 						<div class="card-block">
 							<h4 class="card-title">{{title}}</h4>
-							<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-							<a href="#" class="btn btn-primary">Button</a>
+							<p>id: {{owner}}</p>
+							<p class="card-text">Created by: {{username owner}}</p>
+							<a href="/documents/{{_id}}" class="btn btn-primary">View</a>
 						</div>
 					</div>
-					
-				</a>
 			</div>	
 			{{/each}}
 		</div>

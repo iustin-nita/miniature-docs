@@ -112,6 +112,12 @@ Template.editableText.helpers({
     documents: function(){
       return Documents.find({});
     },
+    username: function(id) {
+      var user = Meteor.users.findOne({_id: id}).profile;
+      var nameToPrint = user.first-name + '' + user.last-name;
+      console.log(nameToPrint);
+      return nameToPrint;
+    }
   });
 
 
